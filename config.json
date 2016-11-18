@@ -1,0 +1,29 @@
+{
+    "optimizations": {
+        "static-type-inference": true,
+        "static-type-inference-second-pass": true,
+        "local-context-pass": true,
+        "constant-folding": true,
+        "static-constant-class-folding": true
+    },
+    "namespace": "phalcon",
+    "name": "volt",
+    "description": "Designer friendly and fast template engine for PHP",
+    "author": "Phalcon Team and contributors",
+    "version": "3.0.1",
+    "verbose": false,
+    "optimizer-dirs": [
+        "optimizers"
+    ],
+    "constants-sources": [
+        "ext/phalcon/mvc/view/engine/volt/scanner.h"
+    ],
+    "extra-sources": [
+        "phalcon/mvc/view/engine/volt/parser.c",
+        "phalcon/mvc/view/engine/volt/scanner.c",
+    ],
+    "globals": {
+    },
+    "destructors": {
+    }
+}

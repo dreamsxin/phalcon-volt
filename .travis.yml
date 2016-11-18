@@ -1,0 +1,71 @@
+language: php
+
+sudo: required
+dist: precise
+
+php:
+  - 5.5
+  - 5.6
+
+matrix:
+  allow_failures:
+    - php: 7.1
+  include:
+    - php: 7.0
+      env: ZEND_BACKEND="--backend=ZendEngine3"
+    - php: 7.1
+      env: ZEND_BACKEND="--backend=ZendEngine3"
+
+git:
+  depth: 1
+
+cache:
+  apt: true
+  ccache: true
+  timeout: 691200
+  directories:
+    - .temp
+    #- vendor
+    - $HOME/.ccache
+    - $HOME/.composer/cache
+
+env:
+  global:
+    - ZEND_DONT_UNLOAD_MODULES=1
+    - CC="ccache gcc"
+    - PHPIZE_BIN="$(which phpize 2> /dev/null || which phpize5 2> /dev/null)"
+
+before_install:
+  - export PATH=$PATH:~/bin;
+  - composer self-update -q
+  - travis_retry composer --prefer-source install
+  - bash unit-tests/_ci/install_prereqs.sh
+  - bash unit-tests/_ci/install_zephir.sh
+  - '( zephir fullclean && zephir generate $ZEND_BACKEND )'
+
+before_script:
+  - (export PRE_PHP_INCLUDES=`php-config --includes`; cd ext/; for file in `find kernel -name "*.h"`; do $CC "$file" -I. $PRE_PHP_INCLUDES -o "$file.ghc"; done)
+  - (cd ext; export CFLAGS="-g3 -O1 -std=gnu90 -Wall -DZEPHIR_RELEASE=1"; $PHPIZE_BIN &> /dev/null && ./configure --silent --enable-volt &> /dev/null && make --silent -j4 &> /dev/null && make --silent install)
+  - phpenv config-add unit-tests/_ci/volt.ini
+  - php --ri volt
+  - php -m
+  - pecl list
+  - ulimit -c unlimited -S || true
+  - echo '/tmp/core_%e.%p' | sudo tee /proc/sys/kernel/core_pattern &> /dev/null
+  - echo "opcache.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+script:
+  - vendor/bin/phpunit --bootstrap unit-tests/_ci/phpunit.php --debug unit-tests/
+
+after_failure:
+  - bash unit-tests/_ci/after_failure.sh
+
+notifications:
+  email:
+    - dreamsxin@qq.com
+
+addons:
+  apt:
+    packages:
+      - gdb
+      - re2c
