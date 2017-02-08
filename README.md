@@ -16,7 +16,7 @@ On a Unix-based platform you can easily compile and install the extension from s
 
 Prerequisite packages are:
 
-* PHP 5.5.x/5.6.x/7.0.x development resources (PHP 5.3 and 5.4 are no longer supported)
+* PHP 7.0.x development resources
 * GCC compiler (Linux/Solaris/FreeBSD) or Xcode (MacOS)
 * [`re2c`](http://re2c.org)
 * Phalcon7
