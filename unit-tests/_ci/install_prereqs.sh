@@ -5,9 +5,9 @@ CFLAGS="-O2 -g3 -fno-strict-aliasing -std=gnu90";
 
 install_phalcon7() {
 	git clone https://github.com/dreamsxin/cphalcon7.git /tmp/cphalcon7
-	cd /tmp/cphalcon7;
+	cd /tmp/cphalcon7/ext;
 
-	$PHPIZE_BIN &> /dev/null
+	/usr/bin/phpize &> /dev/null
 	./configure CFLAGS="-O2 -g" --silent --enable-phalcon &> /dev/null
 
 	make --silent -j4 &> /dev/null
