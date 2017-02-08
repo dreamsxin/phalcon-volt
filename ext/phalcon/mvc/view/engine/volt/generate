@@ -14,7 +14,7 @@ re2c -o scanner.c scanner.re
 ./lemon -s parser.php5.lemon
 ./lemon -s parser.php7.lemon
 
-echo "#include \"php_phalcon.h\"" > parser.c
+echo "#include \"php_volt.h\"" > parser.c
 echo "#if PHP_VERSION_ID < 70000" >> parser.c
 cat parser.php5.c >> parser.c
 echo "#else" >> parser.c

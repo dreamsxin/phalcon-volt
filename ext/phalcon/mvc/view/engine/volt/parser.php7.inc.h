@@ -4,15 +4,15 @@
 #endif
 
 #include "php.h"
-#include "php_phalcon.h"
-#include "phalcon.h"
+#include "php_volt.h"
+#include "volt.h"
 
 #include <ext/standard/php_smart_string.h>
 #include <zend_smart_str.h>
 
-#include "parser.php7.h"
-#include "scanner.h"
-#include "volt.h"
+#include "phalcon/mvc/view/engine/volt/parser.php7.h"
+#include "phalcon/mvc/view/engine/volt/scanner.h"
+#include "phalcon/mvc/view/engine/volt/pvolt.h"
 
 #include "kernel/main.h"
 #include "kernel/memory.h"

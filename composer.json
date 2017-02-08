@@ -10,10 +10,7 @@
         "php": ">=5.5"
     },
     "require-dev": {
-        "codeception/codeception": "~2.2",
-        "codeception/verify": "~0.3",
-        "codeception/specify": "~0.4",
-        "phalcon/zephir": "dev-master"
+        "phpunit/phpunit": "5.5.*"
     },
     "license": "BSD-3-Clause",
     "authors": [
@@ -27,19 +24,6 @@
             "homepage": "https://github.com/phalcon/cphalcon/graphs/contributors"
         }
     ],
-    "autoload-dev": {
-        "psr-4": {
-            "Phalcon\\Test\\Unit\\": "tests/unit/",
-            "Phalcon\\Test\\Integration\\": "tests/integration/",
-            "Phalcon\\Test\\Proxy\\": "tests/_proxies/",
-            "Phalcon\\Test\\Module\\": "tests/_support/Module/"
-        }
-    },
-    "scripts": {
-        "post-update-cmd": [
-            "php vendor/bin/codecept build"
-        ]
-    },
     "support": {
         "issues": "https://github.com/dreamsxin/volt/issues",
         "source": "https://github.com/dreamsxin/volt",

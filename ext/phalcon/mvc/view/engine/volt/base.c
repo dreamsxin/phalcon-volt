@@ -211,12 +211,12 @@ int phvolt_parse_view(zval *result, zval *view_code, zval *template_path TSRMLS_
 #endif
 
 	if (Z_TYPE_P(view_code) != IS_STRING) {
-		ZEPHIR_THROW_EXCEPTION_STRW(phalcon_mvc_view_exception_ce, "View code must be a string");
+		ZEPHIR_THROW_EXCEPTION_STRW(zephir_get_internal_ce(SL("phalcon\\mvc\\view\\exception")), "View code must be a string");
 		return FAILURE;
 	}
 
 	if (phvolt_internal_parse_view(&result, view_code, template_path, &error_msg TSRMLS_CC) == FAILURE) {
-		ZEPHIR_THROW_EXCEPTION_STRW(phalcon_mvc_view_exception_ce, Z_STRVAL_P(error_msg));
+		ZEPHIR_THROW_EXCEPTION_STRW(zephir_get_internal_ce(SL("phalcon\\mvc\\view\\exception")), Z_STRVAL_P(error_msg));
 #if PHP_VERSION_ID < 70000
 		zval_ptr_dtor(&error_msg);
 #else

@@ -32,11 +32,11 @@ use Phalcon\Mvc\View\Exception;
  */
 class Volt extends Engine implements EngineInterface
 {
-	protected _options;
+	public _options;
 
-	protected _compiler;
+	public _compiler;
 
-	protected _macros;
+	public _macros;
 
 	/**
 	 * Set Volt's options
@@ -71,7 +71,7 @@ class Volt extends Engine implements EngineInterface
 			 */
 			let dependencyInjector = <DiInterface> this->_dependencyInjector;
 			if typeof dependencyInjector == "object" {
-				compiler->setDi(dependencyInjector);
+				compiler->setDI(dependencyInjector);
 			}
 
 			/**

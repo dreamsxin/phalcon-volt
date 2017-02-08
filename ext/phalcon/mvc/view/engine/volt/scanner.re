@@ -17,7 +17,7 @@
   +------------------------------------------------------------------------+
 */
 
-#include "php_phalcon.h"
+#include "php_volt.h"
 #include "scanner.h"
 
 #define YYCTYPE unsigned char

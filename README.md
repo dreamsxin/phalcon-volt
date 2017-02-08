@@ -6,7 +6,7 @@ Volt template engine from [Phalcon](https://github.com/phalcon/cphalcon/), Desig
 Get Started
 -----------
 
-Volt is written in [Zephir/C](http://zephir-lang.com/) with platform independence in mind. 
+Volt is written in [Zephir/C](http://zephir-lang.com/) with platform independence in mind.
 
 ### Linux/Unix/Mac
 
@@ -19,23 +19,12 @@ Prerequisite packages are:
 * PHP 5.5.x/5.6.x/7.0.x development resources (PHP 5.3 and 5.4 are no longer supported)
 * GCC compiler (Linux/Solaris/FreeBSD) or Xcode (MacOS)
 * [`re2c`](http://re2c.org)
+* Phalcon7
 
 Ubuntu:
 
 ```bash
-sudo apt-get install php5-dev libpcre3-dev gcc make
-```
-
-Suse:
-
-```bash
-sudo zypper install php5-devel gcc make
-```
-
-CentOS/Fedora/RHEL
-
-```bash
-sudo yum install php-devel pcre-devel gcc make
+sudo apt-get install re2c php5-dev libpcre3-dev gcc make
 ```
 
 General Compilation
@@ -44,9 +33,16 @@ General Compilation
 Follow these instructions to generate a binary extension for your platform:
 
 ```bash
-git clone git://github.com/dreamsxin/volt.git
-cd volt
+git clone https://github.com/dreamsxin/phalcon7-zephir.git
+cd zephir
 sudo ./install
+
+git clone https://github.com/dreamsxin/volt.git
+cd volt
+../zephir/bin/zephir compile
+cd ext
+make
+make install
 ```
 
 Add the extension to your php.ini:

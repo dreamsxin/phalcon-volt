@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-cd ${TRAVIS_BUILD_DIR}/vendor/phalcon/zephir
+git clone https://github.com/dreamsxin/phalcon7-zephir.git /tmp/zephir
+cd /tmp/zephir;
 
 ZEPHIRDIR="$( cd "$( dirname . )" && pwd )"
 sed "s#%ZEPHIRDIR%#$ZEPHIRDIR#g" bin/zephir > bin/zephir-cmd

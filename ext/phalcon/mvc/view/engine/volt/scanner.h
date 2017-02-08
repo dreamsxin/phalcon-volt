@@ -20,7 +20,7 @@
 #ifndef PHALCON_MVC_VIEW_ENGINE_VOLT_SCANNER_H
 #define PHALCON_MVC_VIEW_ENGINE_VOLT_SCANNER_H
 
-#include "php_phalcon.h"
+#include "php_volt.h"
 
 #define PHVOLT_RAW_BUFFER_SIZE 256
 

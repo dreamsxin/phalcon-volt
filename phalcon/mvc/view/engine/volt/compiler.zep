@@ -19,9 +19,9 @@
 
 namespace Phalcon\Mvc\View\Engine\Volt;
 
+use Phalcon\Di\Injectable;
 use Phalcon\DiInterface;
-use Phalcon\Mvc\ViewBaseInterface;
-use Phalcon\Di\InjectionAwareInterface;
+use Phalcon\Mvc\ViewInterface;
 use Phalcon\Mvc\View\Engine\Volt\Exception;
 
 /**
@@ -37,11 +37,8 @@ use Phalcon\Mvc\View\Engine\Volt\Exception;
  *	require $compiler->getCompiledTemplatePath();
  *</code>
  */
-class Compiler implements InjectionAwareInterface
+class Compiler extends Injectable
 {
-
-	protected _dependencyInjector;
-
 	protected _view;
 
 	protected _options;
@@ -87,27 +84,11 @@ class Compiler implements InjectionAwareInterface
 	/**
 	 * Phalcon\Mvc\View\Engine\Volt\Compiler
 	 */
-	public function __construct(<ViewBaseInterface> view = null)
+	public function __construct(<ViewInterface> view = null)
 	{
 		if typeof view == "object" {
 			let this->_view = view;
 		}
-	}
-
-	/**
-	 * Sets the dependency injector
-	 */
-	public function setDI(<DiInterface> dependencyInjector)
-	{
-		let this->_dependencyInjector = dependencyInjector;
-	}
-
-	/**
-	 * Returns the internal dependency injector
-	 */
-	public function getDI() -> <DiInterface>
-	{
-		return this->_dependencyInjector;
 	}
 
 	/**
@@ -469,45 +450,6 @@ class Compiler implements InjectionAwareInterface
 				return "''";
 			}
 
-			let method = lcfirst(camelize(name)),
-				className = "Phalcon\\Tag";
-
-			/**
-			 * Check if it's a method in Phalcon\Tag
-			 */
-			if method_exists(className, method) {
-
-				let arrayHelpers = this->_arrayHelpers;
-				if typeof arrayHelpers != "array" {
-					let arrayHelpers = [
-						"link_to": true,
-						"image": true,
-						"form": true,
-						"select": true,
-						"select_static": true,
-						"submit_button": true,
-						"radio_field": true,
-						"check_field": true,
-						"file_field": true,
-						"hidden_field": true,
-						"password_field": true,
-						"text_area": true,
-						"text_field": true,
-						"email_field": true,
-						"date_field": true,
-						"tel_field": true,
-						"numeric_field": true,
-						"image_input": true
-					];
-					let this->_arrayHelpers = arrayHelpers;
-				}
-
-				if isset arrayHelpers[name] {
-					return "$this->tag->" . method . "([" . arguments . "])";
-				}
-				return "$this->tag->" . method . "(" . arguments . ")";
-			}
-
 			/**
 			 * Get a dynamic URL
 			 */
@@ -547,6 +489,45 @@ class Compiler implements InjectionAwareInterface
 			 */
 			if name == "constant" {
 				return "constant(" . arguments . ")";
+			}
+
+			let method = lcfirst(camelize(name)),
+				className = "Phalcon\\Tag";
+
+			/**
+			 * Check if it's a method in Phalcon\Tag
+			 */
+			if method_exists(className, method) {
+
+				let arrayHelpers = this->_arrayHelpers;
+				if typeof arrayHelpers != "array" {
+					let arrayHelpers = [
+						"link_to": true,
+						"image": true,
+						"form": true,
+						"select": true,
+						"select_static": true,
+						"submit_button": true,
+						"radio_field": true,
+						"check_field": true,
+						"file_field": true,
+						"hidden_field": true,
+						"password_field": true,
+						"text_area": true,
+						"text_field": true,
+						"email_field": true,
+						"date_field": true,
+						"tel_field": true,
+						"numeric_field": true,
+						"image_input": true
+					];
+					let this->_arrayHelpers = arrayHelpers;
+				}
+
+				if isset arrayHelpers[name] {
+					return "$this->tag->" . method . "([" . arguments . "])";
+				}
+				return "$this->tag->" . method . "(" . arguments . ")";
 			}
 
 			/**
@@ -2611,24 +2592,24 @@ class Compiler implements InjectionAwareInterface
 	 */
 	protected function getFinalPath(string path)
 	{
-		var view, viewsDirs, viewsDir;
+		var view, viewsDIrs, viewsDIr;
 		let view = this->_view;
 
 		if typeof view == "object" {
-			let viewsDirs = view->getViewsDir();
+			let viewsDIrs = view->getViewsDIr();
 
-			if typeof viewsDirs == "array" {
-				for viewsDir in viewsDirs {
-					if file_exists(viewsDir . path) {
-						return viewsDir . path;
+			if typeof viewsDIrs == "array" {
+				for viewsDIr in viewsDIrs {
+					if file_exists(viewsDIr . path) {
+						return viewsDIr . path;
 					}
 				}
 
-				// Otherwise, take the last viewsDir
-				return viewsDir . path;
+				// Otherwise, take the last viewsDIr
+				return viewsDIr . path;
 
 			} else {
-				return viewsDirs . path;
+				return viewsDIrs . path;
 			}
 		}
 
