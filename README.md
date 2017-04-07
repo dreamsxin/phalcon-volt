@@ -34,8 +34,11 @@ Follow these instructions to generate a binary extension for your platform:
 
 ```bash
 git clone https://github.com/dreamsxin/phalcon7-zephir.git
-cd zephir
-sudo ./install
+cd zephir/parser/parser
+./build_linux.sh
+
+cd zephir/parser
+phpize && ./configure && make -j4 && sudo make install # 编译安装成功后，配置 extension=zephir_parser.so
 
 git clone https://github.com/dreamsxin/volt.git
 cd volt
